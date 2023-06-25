@@ -10,9 +10,15 @@
     <parent>
         <groupId>net.cubespace</groupId>
         <artifactId>Yamler-parent</artifactId>
-        <version>2.4.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>2.5.0-SNAPSHOT</version>
     </parent>
+
+    <repositories>
+        <repository>
+            <id>snapshot-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -39,13 +45,6 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>snapshot-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>net.cubespace</groupId>
@@ -55,7 +54,16 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.7-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.19-R0.1-SNAPSHOT</version>
+            <type>javadoc</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
