@@ -1,17 +1,17 @@
 package net.cubespace.Yamler.Config;
 
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.representer.Representer;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,19 +21,17 @@ import java.util.Map;
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
 public class BaseConfigMapper extends BaseConfig {
-	private transient Yaml yaml;
+	private final transient Yaml yaml;
 	protected transient ConfigSection root;
-	private transient Map<String, ArrayList<String>> comments = new LinkedHashMap<>();
-	private transient Representer yamlRepresenter = new Representer();
+	private final transient Map<String, ArrayList<String>> comments = new LinkedHashMap<>();
 
 	protected BaseConfigMapper() {
 		DumperOptions yamlOptions = new DumperOptions();
 		yamlOptions.setIndent(2);
 		yamlOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
-		yamlRepresenter.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-		yaml = new Yaml(new CustomClassLoaderConstructor(BaseConfigMapper.class.getClassLoader()), yamlRepresenter, yamlOptions);
+		Representer yamlRepresenter = new Representer(yamlOptions);
+		yaml = new Yaml(new CustomClassLoaderConstructor(BaseConfigMapper.class.getClassLoader(), new LoaderOptions()), yamlRepresenter, yamlOptions);
 
         /*
         Configure the settings for serializing via the annotations present.
@@ -44,7 +42,7 @@ public class BaseConfigMapper extends BaseConfig {
 	protected void loadFromYaml() throws InvalidConfigurationException {
 		root = new ConfigSection();
 
-		try (InputStreamReader fileReader = new InputStreamReader(new FileInputStream(CONFIG_FILE), Charset.forName("UTF-8"))) {
+		try (InputStreamReader fileReader = new InputStreamReader(Files.newInputStream(CONFIG_FILE.toPath()), StandardCharsets.UTF_8)) {
 			Object object = yaml.load(fileReader);
 
 			if (object != null) {
@@ -73,7 +71,7 @@ public class BaseConfigMapper extends BaseConfig {
 	}
 
 	protected void saveToYaml() throws InvalidConfigurationException {
-		try (OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE), Charset.forName("UTF-8"))) {
+		try (OutputStreamWriter fileWriter = new OutputStreamWriter(Files.newOutputStream(CONFIG_FILE.toPath()), StandardCharsets.UTF_8)) {
 			if (CONFIG_HEADER != null) {
 				for (String line : CONFIG_HEADER) {
 					fileWriter.write("# " + line + "\n");
@@ -82,7 +80,7 @@ public class BaseConfigMapper extends BaseConfig {
 				fileWriter.write("\n");
 			}
 
-			Integer depth = 0;
+			int depth = 0;
 			ArrayList<String> keyChain = new ArrayList<>();
 			String yamlString = yaml.dump(root.getValues(true));
 			StringBuilder writeLines = new StringBuilder();
@@ -126,12 +124,7 @@ public class BaseConfigMapper extends BaseConfig {
 				}
 
 				String search;
-				if (keyChain.size() > 0) {
-					search = join(keyChain, ".");
-				} else {
-					search = "";
-				}
-
+				search = join(keyChain, ".");
 
 				if (comments.containsKey(search)) {
 					for (String comment : comments.get(search)) {
@@ -152,6 +145,7 @@ public class BaseConfigMapper extends BaseConfig {
 		}
 	}
 
+	@SuppressWarnings("SameParameterValue")
 	private static String join(List<String> list, String conjunction) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
