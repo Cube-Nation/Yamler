@@ -15,11 +15,11 @@
 
     <distributionManagement>
         <repository>
-            <id>dev.projectshard.repo.releases</id>
+            <id>projectshard.releases</id>
             <url>https://repo.projectshard.dev/repository/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>dev.projectshard.repo.snapshots</id>
+            <id>projectshard.snapshots</id>
             <url>https://repo.projectshard.dev/repository/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
