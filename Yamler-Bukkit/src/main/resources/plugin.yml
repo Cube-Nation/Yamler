@@ -2,3 +2,5 @@ name: Yamler
 main : net.cubespace.Yamler.YamlerPlugin
 version: ${project.version}b-${build.number}
 author: geNAZt
+
+folia-supported: true

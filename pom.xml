@@ -6,7 +6,7 @@
 
     <groupId>net.cubespace</groupId>
     <artifactId>Yamler-parent</artifactId>
-    <version>2.5.0-SNAPSHOT</version>
+    <version>2.5.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -15,12 +15,12 @@
 
     <distributionManagement>
         <repository>
-            <id>org.lichtspiele.nexus.release</id>
-            <url>https://nexus.lichtspiele.org/repository/maven-releases/</url>
+            <id>dev.projectshard.repo.releases</id>
+            <url>https://repo.projectshard.dev/repository/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>org.lichtspiele.nexus.snapshot</id>
-            <url>https://nexus.lichtspiele.org/repository/maven-snapshots/</url>
+            <id>dev.projectshard.repo.snapshots</id>
+            <url>https://repo.projectshard.dev/repository/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
