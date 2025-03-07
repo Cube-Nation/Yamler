@@ -16,11 +16,11 @@
     <distributionManagement>
         <repository>
             <id>projectshard.releases</id>
-            <url>https://repo.projectshard.dev/repository/releases/</url>
+            <url>https://repo.projectshard.dev/repository/maven-cn-releases/</url>
         </repository>
         <snapshotRepository>
             <id>projectshard.snapshots</id>
-            <url>https://repo.projectshard.dev/repository/snapshots/</url>
+            <url>https://repo.projectshard.dev/repository/maven-cn-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -61,8 +61,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <O>-Xlint:all</O>
                         <O>-Xlint:-path</O>
